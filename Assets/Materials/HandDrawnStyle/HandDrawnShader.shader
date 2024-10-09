@@ -27,8 +27,9 @@ Shader "Custom/HandDrawn"
 				half rim = dot(normalize(lightDir), s.Normal);
 				half stepRim = step(_ShadowRange, rim);
 				half4 c;
-				c.rgb = step(0.5, pow(abs(sin((_uv.x + _uv.y) * _LineSpecrate)), _LineWidthPow)) * (1 - stepRim);
-				c.rgb += step(0.5, pow(abs(sin((+_uv.x - _uv.y) * _LineSpecrate)), _LineWidthPow)) * (1 - stepRim);
+				c.rgb = step(0.5, pow(abs(sin((_uv.x - _uv.y) * _LineSpecrate)), _LineWidthPow)) * (1 - stepRim);
+				if (rim < 0.06)
+					c.rgb += step(0.5, pow(abs(sin((_uv.x + _uv.y) * _LineSpecrate)), _LineWidthPow)) * (1 - stepRim);
 				c.rgb = min(1, c.rgb);
 				c.rgb -= 1;
 				c.rgb = abs(c.rgb);
